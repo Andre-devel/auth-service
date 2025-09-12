@@ -10,9 +10,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class AuthService {
 
     private final WebClient webClient;
-    private final JwtUtil jwtUtil;
+    private final JwtUtils jwtUtil;
 
-    public AuthService(WebClient.Builder webClientBuilder, JwtUtil jwtUtil) {
+    public AuthService(WebClient.Builder webClientBuilder, JwtUtils jwtUtil) {
         this.webClient = webClientBuilder.build();
         this.jwtUtil = jwtUtil;
     }
@@ -25,7 +25,7 @@ public class AuthService {
                 .bodyValue(authRequest)
                 .retrieve()
                 .bodyToMono(UserVO.class)
-                .block(); // Para converter para síncrono
+                .block();
 
         // Gera os tokens JWT
         String accessToken = jwtUtil.generateToken(userLogged.id().toString(), "USER", "ACCESS");

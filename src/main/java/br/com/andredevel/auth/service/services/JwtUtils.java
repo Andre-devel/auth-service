@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Service
-public class JwtUtil {
+public class JwtUtils {
     
     @Value("${jwt.secret}") 
     private String secret;  
@@ -30,7 +30,7 @@ public class JwtUtil {
         return io.jsonwebtoken.Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(token.replace("Bearer ", ""))
                 .getBody();
     }   
     
@@ -39,7 +39,7 @@ public class JwtUtil {
     }
     
     public String generateToken(String userId, String role, String tokenType) {
-        Map<String, String> claims = Map.of("id", userId, "role", role);
+        Map<String, String> claims = Map.of("userId", userId, "role", role);
         long expirationMillis = "ACCESS".equalsIgnoreCase(tokenType) 
                 ? Long.parseLong(expiration) * 1000 
                 : Long.parseLong(expiration) * 1000 * 5; 
@@ -49,7 +49,7 @@ public class JwtUtil {
         
         return io.jsonwebtoken.Jwts.builder()
                 .setClaims(claims)
-                .setSubject(claims.get("id"))
+                .setSubject(claims.get("userId"))
                 .setIssuedAt(now)   
                 .setExpiration(expiryDate)  
                 .signWith(key)
