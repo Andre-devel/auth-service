@@ -2,6 +2,7 @@ package br.com.andredevel.auth.service.api.controller;
 
 import br.com.andredevel.auth.service.api.model.AuthRequest;
 import br.com.andredevel.auth.service.api.model.AuthResponse;
+import br.com.andredevel.auth.service.api.model.RegisterRequest;
 import br.com.andredevel.auth.service.services.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +21,10 @@ public class AuthController {
     @PostMapping(value = "/login")
     public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+    
+    @PostMapping(value = "/register")
+    public ResponseEntity<AuthResponse> login(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.register(request));
     }
 }
