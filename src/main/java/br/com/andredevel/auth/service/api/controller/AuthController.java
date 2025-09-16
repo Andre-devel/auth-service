@@ -4,6 +4,7 @@ import br.com.andredevel.auth.service.api.model.AuthRequest;
 import br.com.andredevel.auth.service.api.model.AuthResponse;
 import br.com.andredevel.auth.service.api.model.RegisterRequest;
 import br.com.andredevel.auth.service.services.AuthService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +20,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
-    
+
     @PostMapping(value = "/register")
-    public ResponseEntity<AuthResponse> login(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 }
